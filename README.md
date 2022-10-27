@@ -32,8 +32,9 @@ If you want to host your own bot then its superr siple.
 
 ### Limitations
 
+- Not everyting can be downloadad and zipped, see [Ideas & ToDo's](#ideas--todos)
 - Cant download files bigger than 20MB (API limitation)
-- Can only download files that got send to the bot as files
+- Images cant be downloaded in the Original quality, send as file if you need original quality (API limitation)
 
 ## Ideas & ToDo's
 
@@ -43,13 +44,19 @@ If you want to host your own bot then its superr siple.
 - [ ] remove of files that are older than x minutes (1min?)
 - [ ] compress in different formats? 7zip, rar and more?
 - [ ] special compression algorithm, eg. zstd
-- [ ] Allow all files (stickers, normal images, voice messages and more) to be downloadable
+- [ ] Allow more files to be processed:
+   - [X] Pictures
+   - [ ] Videos
+   - [ ] Voice messages
+   - [ ] Stickers
+      - [ ] Individual
+      - [ ] Packs
 - [ ] Notifications, when files are finished downloading and compressed
-- [x] Configuration through environment variables and .ENV file
+- [X] Configuration through environment variables and .ENV file
 
 ---
 
 ## Used Library's
 
 - [env](https://github.com/caarlos0/env) - Configuration
-- [Bot API](github.com/go-telegram-bot-api/telegram-bot-api) - Telegram API
+- [Bot API](https://github.com/go-telegram-bot-api/telegram-bot-api) - Telegram API

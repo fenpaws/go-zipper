@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 )
 
 type ConfigDatabase struct {
@@ -106,6 +107,11 @@ func CreateUniqueTempFolder(folderPath string, identifier string) (string, error
 	return DownloadDir, nil
 }
 
+func FileNameGenerator(fileURL string) string {
+	regex := regexp.MustCompile(`(?m)(?:.+\/)(.+)`)
+	return regex.FindAllStringSubmatch(fileURL, -1)[0][1]
+}
+
 func main() {
 
 	cfg := ConfigDatabase{}
@@ -113,9 +119,7 @@ func main() {
 		fmt.Printf("%+v\n", err)
 	}
 
-	token := cfg.BotToken
-
-	bot, err := tgbotapi.NewBotAPI(token)
+	bot, err := tgbotapi.NewBotAPI(cfg.BotToken)
 	if err != nil {
 		log.Printf(err.Error())
 	}
@@ -133,13 +137,34 @@ func main() {
 	for update := range updates {
 
 		if update.Message != nil {
+
+			// Every file(Document) the user sends gets added to the files[] map
+			// this is only for files send as files
 			if update.Message.Document != nil {
 				fileUrl, err := bot.GetFileDirectURL(update.Message.Document.FileID)
 				if err != nil {
 					log.Printf(err.Error())
 				}
-				fileName := update.Message.Document.FileName
-				files[fileName] = fileUrl
+				files[update.Message.Document.FileName] = fileUrl
+			}
+
+			// Every photo the user sends gets added to the files[] map
+			// limitation: cant download the original quality, downloads only the largest possible
+			if update.Message.Photo != nil {
+				photoSize := update.Message.Photo
+				photoID := photoSize[len(photoSize)-1].FileID
+
+				photoUrl, err := bot.GetFileDirectURL(photoID)
+				if err != nil {
+					log.Printf(err.Error())
+				}
+
+				files[FileNameGenerator(photoUrl)] = photoUrl
+			}
+
+			// Gets full json message if debugging is enabled
+			if cfg.Debug == true {
+				log.Printf(update.Message.Text)
 			}
 
 			if update.Message.Text == "/zip" {
