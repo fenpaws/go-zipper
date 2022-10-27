@@ -15,6 +15,7 @@ import (
 type ConfigDatabase struct {
 	BotToken          string `env:"BOT_TOKEN"`
 	TelegramAPIServer string `env:"TELEGRAM_API_SERVER" envDefault:"https://api.telegram.org"`
+	Debug             bool   `env:"DEBUG" envDefault:"false"`
 }
 
 func DownloadFile(url string, downloadFolder string, fileName string) error {
@@ -120,7 +121,7 @@ func main() {
 	}
 	bot.SetAPIEndpoint(cfg.TelegramAPIServer + "/bot%s/%s")
 
-	bot.Debug = true
+	bot.Debug = cfg.Debug
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
@@ -178,6 +179,13 @@ func main() {
 				message, err := bot.Send(tgbotapi.NewDocument(update.Message.Chat.ID, zipFileBytes))
 				log.Printf(message.Text)
 				files = make(map[string]string)
+
+				err = os.RemoveAll(DownloadFolder + ".zip")
+				if err != nil {
+					log.Printf(err.Error())
+				}
+				log.Printf("ZIP file %s deleated!", DownloadFolder+".zip")
+
 			}
 
 		}
