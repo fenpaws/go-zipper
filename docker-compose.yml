@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   bot:
-    image: ghcr.io/fenpaws/go-zipper-telegram:main
+    image: ghcr.io/fenpaws/go-zipper:main
     build: .
     env_file:
       - .env
