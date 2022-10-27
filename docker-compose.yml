@@ -1,0 +1,17 @@
+version: '3.3'
+services:
+  bot:
+    image: ghcr.io/fenpaws/go-zipper-telegram:main
+    build: .
+    env_file:
+      - .env
+
+  api-server:
+    ports:
+      - '8081:8081'
+    command:
+      - "--local"
+    environment:
+      - TELEGRAM_API_ID=yourApiID
+      - TELEGRAM_API_HASH=yourApiHash
+    image: ghcr.io/lukaszraczylo/tdlib-telegram-bot-api-docker/telegram-api-server
