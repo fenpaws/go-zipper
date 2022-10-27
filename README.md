@@ -1,6 +1,6 @@
 # Telegram Zipper bot
 
-Send some files to the bod, and it makes you a ZIP!
+Send some files to the bot, and it makes you a ZIP!
 
 ## Usage
 
