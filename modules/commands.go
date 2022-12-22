@@ -11,6 +11,12 @@ func Command(bot *tgbotapi.BotAPI, m *tgbotapi.Message, files map[string]string)
 
 	if m.IsCommand() {
 		switch m.Command() {
+		case "start":
+			cmdStart(*bot, *m)
+		case "help":
+			cmdHelp(*bot, *m)
+		case "about":
+			cmdAbout(*bot, *m)
 		case "zip":
 			cmdNotImplemented(*bot, *m)
 		case "password":
@@ -26,6 +32,20 @@ func Command(bot *tgbotapi.BotAPI, m *tgbotapi.Message, files map[string]string)
 		}
 	}
 
+}
+func cmdStart(bot tgbotapi.BotAPI, m tgbotapi.Message) {
+	msg := "Hey there! My name is " + strings.Replace(bot.Self.UserName, "_", "", -1) + " and I can help you create ZIP files out of any type of file you send me. Just send me your files and then use the /zip command to create the ZIP.\n\nFor more information about my capabilities, use the /help command."
+	SendTelegramMessage(bot, m, msg)
+}
+
+func cmdHelp(bot tgbotapi.BotAPI, m tgbotapi.Message) {
+	msg := "**To use this bot, simply follow these steps:**\n\n1. Start a new ZIP file by sending the command /zip to the bot.\n2. Send the bot any files you want to include in the ZIP file, such as images, documents, GIFs, and more.\n3. (Optional) If you want the ZIP file to be password protected, use the command /password YOUR-PASSWORD.\n4. (Optional) If you want to specify a level of compression for the ZIP file, use the command /compress [0-x], where 0 is no compression and x is maximum compression.\n5. When you are finished adding files to the ZIP, use the command /finish to have the bot download and compress the files. The finished ZIP file will be sent back to you."
+	SendTelegramMessage(bot, m, msg)
+}
+
+func cmdAbout(bot tgbotapi.BotAPI, m tgbotapi.Message) {
+	msg := "Developed by [SoXX](https://t.me/Fenpaws)\nSource Code @ [GitHub](https://github.com/fenpaws/go-zipper)\n"
+	SendTelegramMessage(bot, m, msg)
 }
 
 func cmdZip(m tgbotapi.Message, files map[string]string) {
