@@ -45,11 +45,14 @@ func main() {
 			// Add document to files map if present in update message
 			if err := modules.AddFileToFiles(bot, update, files); err != nil {
 				log.Printf("Error adding file to files map: %v", err)
+				modules.ErrorFileToBig(err, bot, update)
+
 			}
 
 			// Add photo to files map if present in update message
 			if err := modules.AddPhotoToFiles(bot, update, files); err != nil {
 				log.Printf("Error adding photo to files map: %v", err)
+				modules.ErrorFileToBig(err, bot, update)
 			}
 
 			// Handle command if present in update message
