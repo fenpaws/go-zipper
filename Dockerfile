@@ -21,7 +21,7 @@ RUN go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o bot .
 
 # cert stage
 FROM alpine:latest as certs
-RUN apk --update add ca-certificates
+RUN apk --message add ca-certificates
 
 
 ## Deploy

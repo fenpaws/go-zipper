@@ -1,5 +1,6 @@
 ##
 *.env
+test
 
 .vscode/*
 !.vscode/settings.json

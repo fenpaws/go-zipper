@@ -1,14 +1,11 @@
 # Telegram Zipper bot
+![docker-build](https://github.com/fenpaws/go-zipper/actions/workflows/docker-build-publish.yml/badge.svg)
 
-Send some files to the bot, and it makes you a ZIP!
-
-## Usage
-
-Just write the bot [@GoZipper_bot](http://t.me/GoZipper_bot) and forward or send him some files, then just write `/zip` and you will get your data as a ZIP
+This bot allows you to send files to it and receive a ZIP archive of those files in return. Simply write the bot [@GoZipper_bot](http://t.me/GoZipper_bot) and forward or send it some files, then write /zip to receive your ZIP archive.
 
 ## Hosting
 
-If you want to host your own bot then its superr siple.
+If you want to host your own bot
 
 1. Copy the [docker-compose.yml](./docker-compose.yml) file
 2. Create a config.env file and copy the snippet below.
@@ -20,21 +17,23 @@ If you want to host your own bot then its superr siple.
    ```
 
 3. Create a bot with [BotFather](http://t.me/BotFather) and copy your token
-4. Paste your token into the `BOT_TOKEN` section.
-5. now run the bot with `docker-compose up -d`
+4. Paste your token into the ``BOT_TOKEN`` section of config.env. This is also the time to set up commands 
+   - see [commands.md](commands.md) for more information
+5. Run the bot with ``docker-compose up -d``
+
 
 ## Features & Limitations
 
 ### Features
 
-- Can ZIP files, directly as a message or as a forward
-- This bot will delete all your files Immediately after you make the ZIP
+- Can ZIP files, either as a message or as a forward
+- Deletes all files immediately after creating the ZIP archive
 
 ### Limitations
 
-- Not everyting can be downloadad and zipped, see [Ideas & ToDo's](#ideas--todos)
-- Cant download files bigger than 20MB (API limitation)
-- Images cant be downloaded in the Original quality, send as file if you need original quality (API limitation)
+- Not all file types can be downloaded and zipped. See [Ideas & ToDo's](#ideas--todos) for more information.
+- Cannot download files larger than 20MB (API limitation)
+- Images cannot be downloaded in their original quality. If you need the original quality, send the file as a document (API limitation)
 
 ## Ideas & ToDo's
 

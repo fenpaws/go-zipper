@@ -1,4 +1,4 @@
-module go-zipper-telegrambot
+module github.com/fenpaws/go-zipper
 
 go 1.19
 
