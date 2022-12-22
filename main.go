@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/fenpaws/go-zipper/modules/commands"
 	"github.com/fenpaws/go-zipper/modules/config"
-	"github.com/fenpaws/go-zipper/modules/helper"
+	"github.com/fenpaws/go-zipper/modules/telegramerrors"
 	"github.com/fenpaws/go-zipper/modules/telegramfiles"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log"
@@ -38,14 +38,14 @@ func main() {
 			// Add document to files map if present in update message
 			if err := telegramfiles.AddFileToFiles(bot, update, files); err != nil {
 				log.Printf("Error adding file to files map: %v", err)
-				helper.ErrorFileToBig(err, bot, update)
+				telegramerrors.FileToBig(err, bot, update)
 
 			}
 
 			// Add photo to files map if present in update message
 			if err := telegramfiles.AddPhotoToFiles(bot, update, files); err != nil {
 				log.Printf("Error adding photo to files map: %v", err)
-				helper.ErrorFileToBig(err, bot, update)
+				telegramerrors.FileToBig(err, bot, update)
 			}
 
 			// Handle command if present in update message

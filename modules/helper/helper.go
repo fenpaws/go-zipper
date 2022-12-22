@@ -58,10 +58,3 @@ func RandSeq(n int) string {
 	}
 	return string(b)
 }
-
-func ErrorFileToBig(err error, bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	if strings.Contains(err.Error(), "file is too big") {
-		msg := "❌ - Im sorry but i cant download that file, its more then 20MB (API Limitation)"
-		SendTelegramMessage(*bot, *update.Message, msg)
-	}
-}
