@@ -42,8 +42,8 @@ func Clear(folderPath string) {
 }
 
 func SendTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string) {
-	log.Printf(message)
 	msg := tgbotapi.NewMessage(m.Chat.ID, message)
+	msg.ParseMode = "markdown"
 	_, err := bot.Send(msg)
 	if err != nil {
 		log.Printf(err.Error())
