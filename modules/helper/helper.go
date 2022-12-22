@@ -1,4 +1,4 @@
-package modules
+package helper
 
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -50,7 +50,7 @@ func SendTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string
 	}
 }
 
-func randSeq(n int) string {
+func RandSeq(n int) string {
 	letters := []rune("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 	b := make([]rune, n)
 	for i := range b {

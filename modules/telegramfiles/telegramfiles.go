@@ -1,6 +1,7 @@
-package modules
+package telegramfiles
 
 import (
+	"github.com/fenpaws/go-zipper/modules/helper"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"time"
 )
@@ -25,7 +26,7 @@ func AddPhotoToFiles(bot *tgbotapi.BotAPI, update tgbotapi.Update, files map[str
 	}
 
 	// Add the file to the files map
-	files[FileNameGenerator(photoUrl)] = photoUrl
+	files[helper.FileNameGenerator(photoUrl)] = photoUrl
 	return nil
 }
 
@@ -72,13 +73,13 @@ func AddFileToFiles(bot *tgbotapi.BotAPI, update tgbotapi.Update, files map[stri
 			fileName = update.Message.Caption
 		}
 		now := time.Now().Format("2006-01-02")
-		fileName = "voice_" + now + "_" + randSeq(3)
+		fileName = "voice_" + now + "_" + helper.RandSeq(3)
 	} else if update.Message.Sticker != nil {
 		if update.Message.Caption != "" {
 			fileName = update.Message.Caption
 		}
 		now := time.Now().Format("2006-01-02")
-		fileName = "sticker_" + update.Message.Sticker.SetName + "_" + now + "_" + randSeq(3)
+		fileName = "sticker_" + update.Message.Sticker.SetName + "_" + now + "_" + helper.RandSeq(3)
 	}
 
 	// Add the file to the files map

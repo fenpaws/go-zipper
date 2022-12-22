@@ -1,6 +1,9 @@
-package modules
+package commands
 
 import (
+	"github.com/fenpaws/go-zipper/modules/downloader"
+	"github.com/fenpaws/go-zipper/modules/helper"
+	"github.com/fenpaws/go-zipper/modules/zip"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log"
 	"os"
@@ -35,22 +38,22 @@ func Command(bot *tgbotapi.BotAPI, m *tgbotapi.Message, files map[string]string)
 }
 func cmdStart(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	msg := "Hey there! My name is " + strings.Replace(bot.Self.UserName, "_", "", -1) + " and I can help you create ZIP files out of any type of file you send me. Just send me your files and then use the /zip command to create the ZIP.\n\nFor more information about my capabilities, use the /help command."
-	SendTelegramMessage(bot, m, msg)
+	helper.SendTelegramMessage(bot, m, msg)
 }
 
 func cmdHelp(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	msg := "**To use this bot, simply follow these steps:**\n\n1. Start a new ZIP file by sending the command /zip to the bot.\n2. Send the bot any files you want to include in the ZIP file, such as images, documents, GIFs, and more.\n3. (Optional) If you want the ZIP file to be password protected, use the command /password YOUR-PASSWORD.\n4. (Optional) If you want to specify a level of compression for the ZIP file, use the command /compress [0-x], where 0 is no compression and x is maximum compression.\n5. When you are finished adding files to the ZIP, use the command /finish to have the bot download and compress the files. The finished ZIP file will be sent back to you."
-	SendTelegramMessage(bot, m, msg)
+	helper.SendTelegramMessage(bot, m, msg)
 }
 
 func cmdAbout(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	msg := "Developed by [SoXX](https://t.me/Fenpaws)\nSource Code @ [GitHub](https://github.com/fenpaws/go-zipper)\n"
-	SendTelegramMessage(bot, m, msg)
+	helper.SendTelegramMessage(bot, m, msg)
 }
 
 func cmdZip(m tgbotapi.Message, files map[string]string) {
-	var zipper Zipper
-	DownloadFolder, err := TempFolder("./", m.From.UserName)
+	var zipper zip.Zipper
+	DownloadFolder, err := helper.TempFolder("./", m.From.UserName)
 	zipType := "7zip"
 
 	if err != nil {
@@ -58,7 +61,7 @@ func cmdZip(m tgbotapi.Message, files map[string]string) {
 	}
 
 	for fileName, fileURL := range files {
-		err = DownloadFile(fileURL, DownloadFolder, fileName)
+		err = downloader.DownloadFile(fileURL, DownloadFolder, fileName)
 		if err != nil {
 			log.Printf(err.Error())
 		}
@@ -67,31 +70,31 @@ func cmdZip(m tgbotapi.Message, files map[string]string) {
 
 	switch zipType {
 	case "zip":
-		zipper = NewGoZipper()
+		zipper = zip.NewGoZipper()
 	case "7zip":
-		zipper = NewSevenZipper()
+		zipper = zip.NewSevenZipper()
 	default:
-		zipper = NewGoZipper()
+		zipper = zip.NewGoZipper()
 	}
 
 	zipper.Zip(DownloadFolder, "hallo1234!") //TODO
 
-	defer Clear(DownloadFolder)
+	defer helper.Clear(DownloadFolder)
 
 }
 
 func cmdPassword(bot tgbotapi.BotAPI, m tgbotapi.Message) string {
 	arguments := strings.TrimSpace(m.CommandArguments())
 	if arguments != "" {
-		SendTelegramMessage(bot, m, "Password set!")
+		helper.SendTelegramMessage(bot, m, "Password set!")
 		return arguments
 	}
-	SendTelegramMessage(bot, m, "No password supplied\n/password [YOUR-PASSWORD]")
+	helper.SendTelegramMessage(bot, m, "No password supplied\n/password [YOUR-PASSWORD]")
 	return ""
 }
 
 func cmdFinish(bot tgbotapi.BotAPI, m tgbotapi.Message) {
-	DownloadFolder, err := TempFolder("./", m.From.UserName)
+	DownloadFolder, err := helper.TempFolder("./", m.From.UserName)
 	if err != nil {
 		log.Printf(err.Error())
 		return
@@ -114,10 +117,10 @@ func cmdFinish(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 		return
 	}
 
-	defer Clear(DownloadFolder + ".zip")
+	defer helper.Clear(DownloadFolder + ".zip")
 }
 
 func cmdNotImplemented(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	errorMsg := "The command " + m.Text + " is not yet implemented!"
-	SendTelegramMessage(bot, m, errorMsg)
+	helper.SendTelegramMessage(bot, m, errorMsg)
 }

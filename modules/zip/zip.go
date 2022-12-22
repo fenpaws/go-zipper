@@ -1,4 +1,4 @@
-package modules
+package zip
 
 import (
 	"archive/zip"
