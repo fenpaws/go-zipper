@@ -38,6 +38,7 @@ If you want to host your own bot
 ## Ideas & ToDo's
 
 - [ ] Allow user to set a Password for the ZIP
+  - [X] Core Functionality
 - [ ] Securely erase all files that have been downloaded
 - [ ] pin code; for special access (larger file uploads and more)
 - [ ] remove of files that are older than x minutes (1min?)
@@ -45,10 +46,10 @@ If you want to host your own bot
 - [ ] special compression algorithm, eg. zstd
 - [ ] Allow more files to be processed:
    - [X] Pictures
-   - [ ] Videos
-   - [ ] Voice messages
-   - [ ] Stickers
-      - [ ] Individual
+   - [X] Videos
+   - [X] Voice messages
+   - [X] Stickers
+      - [X] Individual
       - [ ] Packs
 - [ ] Notifications, when files are finished downloading and compressed
 - [X] Configuration through environment variables and .ENV file
