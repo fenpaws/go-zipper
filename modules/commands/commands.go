@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"fmt"
 	"github.com/fenpaws/go-zipper/modules/downloader"
 	"github.com/fenpaws/go-zipper/modules/helper"
 	"github.com/fenpaws/go-zipper/modules/zip"
@@ -121,6 +122,6 @@ func cmdFinish(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 }
 
 func cmdNotImplemented(bot tgbotapi.BotAPI, m tgbotapi.Message) {
-	errorMsg := "The command " + m.Text + " is not yet implemented!"
+	errorMsg := fmt.Sprintf("The command %s is not yet implemeted!", m.Text)
 	helper.SendTelegramMessage(bot, m, errorMsg)
 }
