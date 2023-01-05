@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"os"
 	"regexp"
-	"strings"
 )
 
 var regex = regexp.MustCompile(`(?m)(?:.+\/)(.+)`)
@@ -27,18 +26,27 @@ func FileNameGenerator(fileURL string) string {
 func Clear(folderPath string) {
 	var err error
 
-	if strings.Contains(folderPath, "zip") {
-		err = os.RemoveAll(folderPath + ".zip")
-		log.Printf("ZIP file %s deleated!", folderPath+".zip")
-	} else {
+	// Use os.Stat to get information about the file or folder
+	info, err := os.Stat(folderPath)
+	if err != nil {
+		log.Printf("Error getting file info: %v", err)
+		return
+	}
+
+	// Check if the file is a folder or a regular file
+	if info.IsDir() {
+		// It's a folder, so remove it with os.RemoveAll
 		err = os.RemoveAll(folderPath)
 		log.Printf("Temp folder %s deleated!", folderPath)
+	} else {
+		// It's a regular file, so remove it with os.Remove
+		err = os.Remove(folderPath)
+		log.Printf("ZIP file %s deleated!", folderPath)
 	}
 
 	if err != nil {
 		log.Printf(err.Error())
 	}
-
 }
 
 func SendTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string) {
