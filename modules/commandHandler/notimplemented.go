@@ -1,4 +1,4 @@
-package commands
+package commandHandler
 
 import (
 	"fmt"
@@ -8,5 +8,5 @@ import (
 
 func CmdNotImplemented(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	errorMsg := fmt.Sprintf("The command %s is not yet implemeted!", m.Text)
-	helper.SendTelegramMessage(bot, m, errorMsg)
+	helper.SendMarkdownTelegramMessage(bot, m, errorMsg)
 }

@@ -1,10 +1,10 @@
-package commands
+package commandHandler
 
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-func Command(bot *tgbotapi.BotAPI, m *tgbotapi.Message, files map[string]string) {
+func Command(bot *tgbotapi.BotAPI, m *tgbotapi.Message) {
 
 	if m.IsCommand() {
 		switch m.Command() {

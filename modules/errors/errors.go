@@ -1,4 +1,4 @@
-package telegramerrors
+package errors
 
 import (
 	"github.com/fenpaws/go-zipper/modules/helper"

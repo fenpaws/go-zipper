@@ -1,4 +1,4 @@
-package commands
+package commandHandler
 
 import (
 	"github.com/fenpaws/go-zipper/modules/helper"
@@ -7,5 +7,5 @@ import (
 
 func CmdAbout(bot tgbotapi.BotAPI, m tgbotapi.Message) {
 	msg := "Developed by [SoXX](https://t.me/Fenpaws)\nSource Code @ [GitHub](https://github.com/fenpaws/go-zipper)\n"
-	helper.SendTelegramMessage(bot, m, msg)
+	helper.SendMarkdownTelegramMessage(bot, m, msg)
 }

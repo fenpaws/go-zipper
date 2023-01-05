@@ -1,4 +1,4 @@
-package commands
+package commandHandler
 
 import (
 	"github.com/fenpaws/go-zipper/modules/helper"
@@ -9,9 +9,9 @@ import (
 func CmdPassword(bot tgbotapi.BotAPI, m tgbotapi.Message) string {
 	arguments := strings.TrimSpace(m.CommandArguments())
 	if arguments != "" {
-		helper.SendTelegramMessage(bot, m, "Password set!")
+		helper.SendMarkdownTelegramMessage(bot, m, "Password set!")
 		return arguments
 	}
-	helper.SendTelegramMessage(bot, m, "No password supplied\n/password [YOUR-PASSWORD]")
+	helper.SendMarkdownTelegramMessage(bot, m, "No password supplied\n/password [YOUR-PASSWORD]")
 	return ""
 }

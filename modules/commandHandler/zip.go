@@ -1,4 +1,4 @@
-package commands
+package commandHandler
 
 import (
 	"github.com/fenpaws/go-zipper/modules/downloader"

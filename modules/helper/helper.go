@@ -49,9 +49,17 @@ func Clear(folderPath string) {
 	}
 }
 
-func SendTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string) {
+func SendMarkdownTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string) {
 	msg := tgbotapi.NewMessage(m.Chat.ID, message)
 	msg.ParseMode = "markdown"
+	_, err := bot.Send(msg)
+	if err != nil {
+		log.Printf(err.Error())
+	}
+}
+
+func SendTelegramMessage(bot tgbotapi.BotAPI, m tgbotapi.Message, message string) {
+	msg := tgbotapi.NewMessage(m.Chat.ID, message)
 	_, err := bot.Send(msg)
 	if err != nil {
 		log.Printf(err.Error())
